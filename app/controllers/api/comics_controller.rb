@@ -16,8 +16,15 @@ class Api::ComicsController < ApplicationController
     respond_with up_votes.result, :represent_items_with => UpVotesRepresenter
   end
 
+  def show
+    comic = FetchComicDetails.perform(comic_id_params[:comic_id])
+    if comic.success?
+      respond_with comic.result, :represent_items_with => ComicDetailsRepresenter
+    end
+  end
+
   def upvote
-    up_vote = UpVote.perform(up_vote_params[:comic_id])
+    up_vote = UpVote.perform(comic_id_params[:comic_id])
 
     if up_vote.success?
       render json: { success: true, error: nil }
@@ -32,7 +39,7 @@ class Api::ComicsController < ApplicationController
     params.permit(:page, :title).to_h
   end
 
-  def up_vote_params
+  def comic_id_params
     params.permit(:comic_id).to_h
   end
 end
