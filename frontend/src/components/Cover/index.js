@@ -11,7 +11,8 @@ export default class Cover extends Component {
     static propTypes = {
       comicData: React.PropTypes.object.isRequired,
       upVote: React.PropTypes.func.isRequired,
-      upVoted: React.PropTypes.bool.isRequired
+      upVoted: React.PropTypes.bool.isRequired,
+      fetchComic: React.PropTypes.func.isRequired
     }
 
     handleResize() {
@@ -75,7 +76,7 @@ export default class Cover extends Component {
         <div className="pure-u-23-24 pure-u-md-1-4 pure-u-lg-1-5"
           onMouseEnter={ this.showDetails.bind(this, true) }
           onMouseLeave={ this.showDetails.bind(this, false) }>
-          <div className="cover">
+          <div className="cover" onClick={ this.props.fetchComic.bind(this) }>
             <img className="cover-image" alt={ this.props.comicData.title } src={ this.coverImage.call(this) } />
             { this.renderDetail() }
             { this.coverUpvoted() }

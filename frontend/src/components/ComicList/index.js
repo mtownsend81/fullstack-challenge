@@ -53,6 +53,10 @@ class ComicList extends Component {
     this.setState({ upvoted: [comic_id, ...this.state.upvoted] });
   }
 
+  fetchComic(comic_id) {
+    this.props.fetchComic(comic_id);
+  }
+
   renderList()  {
     const results = this.props.comics;
     return results.map((comic) => {
@@ -60,6 +64,7 @@ class ComicList extends Component {
         <Cover
           key={comic.id}
           upVote={ this.upvote.bind(this, comic.id) }
+          fetchComic={ this.fetchComic.bind(this, comic.id) }
           upVoted={ this.checkUpvoted.call(this, comic.id) }
           comicData={ comic }
         />)
